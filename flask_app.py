@@ -13,6 +13,7 @@ def create_npc():
     race = request.form.get('race')
     gender = request.form.get('gender')
     backstory = request.form.get('backstory')
+    print('TEST TEST TEST', race, gender, backstory)
 
     # Production
     response = requests.get(os.getenv('API_URL') + f"/npc?race={race}&gender={gender}&backstory={backstory}")
