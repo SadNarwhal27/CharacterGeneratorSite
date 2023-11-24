@@ -4,10 +4,6 @@
 
 {% block style %}
 <style>
-    #loading_spinner {
-        display: block;
-    }
-
     b {
         color: #9E2A2B;
     }
@@ -87,7 +83,7 @@
     
     <!-- Backstory -->
     {% if response.backstory %}
-        <hr class="border border-5 opacity-75">
+        <hr class="border border-3 opacity-75">
         <h3>Backstory</h3>
         <p>{{ response.backstory }}</p>
     {% endif %}
@@ -125,15 +121,15 @@
             </div>
         </div>
         
-        <button type="submit" class="btn mb-2" style="background-color: #E09F3E;" onclick="showSpinner()">
-            <span id="loading_spinner">Create Character</span>
+        <button type="submit" class="btn mb-2" style="background-color: #E09F3E;" onclick="showSpinner('character_spinner')">
+            <span id="character_spinner">Create Character</span>
         </button>
     </form>
 </div>
 
 <script>
-    function showSpinner() {
-        document.getElementById("loading_spinner").innerHTML = '<div style="color: white;" class="spinner-border"></div>';
+    function showSpinner(spinner_id) {
+        document.getElementById(spinner_id).innerHTML = '<div style="color: white;" class="spinner-border"></div>';
     }
 </script>
 
