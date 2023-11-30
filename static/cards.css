@@ -1,0 +1,28 @@
+b {
+    color: #9E2A2B;
+}
+
+h1, h3 {
+    color: #540B0E;
+}
+
+.slider {
+    outline: 1px;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-runnable-track {
+    background-color: #ccc;
+}
+  
+.slider::-webkit-slider-thumb {
+    background-color: #FFF3B0;
+    outline: solid;
+    outline-color: #E09F3E;
+}
+
+.slider:hover {
+    opacity: 1;
+  }

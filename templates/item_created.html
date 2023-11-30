@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Item Created{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='cards.css') }}">
+{% endblock %}
+
+{% block content %}
+<br></br>
+<div class="container rounded text-center justify-content-center p-3" style="background-color: white; max-width: 500px;">
+    <h1>{{ response.treasure_name.title() }}</h1>
+
+    <hr class="border border-3 opacity-75">
+    <div class="row">
+        <div class="col">
+            <p><b>Type</b> {{ response.treasure_type.capitalize() }}</p>
+        </div>
+        <div class="col">
+            <p><b>Value</b> {{ response.value }}</p>
+        </div>
+        <div class="col">
+            <p><b>Material</b> {{ response.treasure_description }}</p>
+        </div>
+    </div>
+    <div>
+        <h3>Description</h3>
+        <hr>
+        <p>{{ response.generated_description }}</p>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+    <form class="form" action="/item" method="post">
+        <div class="row">
+            <div class="col form-floating">
+                <select class="form-select" name="type" id="type_select">
+                    <option selected value="">Any</option>
+                    <option value="gemstone">Gemstone</option>
+                    <option value="art object">Art Object</option>
+                </select>
+                <label for="type_select">Item Type</label>
+            </div>
+            
+            <!-- TODO add a little pop up thing saying the level of detail value -->
+            <div class="col">
+                <label for="lod_range" class="form-label">Description Level of Detail</label>
+                <input class="form-range slider" type="range" name="lod" id="lod_range" min="1" max="3" value="2">
+            </div>
+
+            <!-- TODO add a value slider to get specifically priced items-->
+        </div>
+        
+        <button type="submit" class="btn mb-2" style="background-color: #E09F3E;" onclick="showSpinner('character_spinner')">
+            <span id="character_spinner" style="color: white;">Create Item</span>
+        </button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+{% endblock %}
