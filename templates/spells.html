@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Character Created{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='cards.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% for level in ['Cantrip', '1', '2', '3', '4', '5', '6', '7', '8', '9'] %}
+<h3>
+    {% if level == 'Cantrip' %}
+        Cantrips
+    {% else %}
+        Level {{ level }}
+    {% endif %}
+</h3>
+<div class="contianer">
+    {% for spell in response %}
+
+        {% if response[spell]['spell_level'] == level %}
+            <li><a href="{{ request.path }}?spell={{ spell }}">{{ spell }}</a></li>
+        {% endif %}
+
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}

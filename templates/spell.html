@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ response.spell_name }}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='cards.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<br></br>
+<div class="container rounded text-center justify-content-center p-3" style="background-color: white;">
+    <h1>{{ response.spell_name.title() }}</h1>
+
+    {% if response.spell_level == 'Cantrip' %}
+    <i>{{ response.spell_school }} Cantrip</i>
+    {% else %}
+    <i>Level {{ response.spell_level }} {{ response.spell_school }}</i>
+    {% endif %}
+
+    <hr class="border border-3 opacity-75">
+    <div class="row">
+        
+    </div>
+
+</div>
+
+{% endblock %}
