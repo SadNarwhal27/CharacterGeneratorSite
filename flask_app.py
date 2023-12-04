@@ -42,7 +42,7 @@ def get_spells():
     spell_class = request.form.get('class')
 
     # Production
-    response = requests.get(os.getenv('API_URL') + f"/spells")
+    response = requests.get(os.getenv('API_URL') + f"/spells?spell={spell}&level={level}&class={spell_class}")
 
     # For testing
     # response = requests.get('http://127.0.0.1:5001/' + f"/spells?spell={spell}&level={level}&class={spell_class}")
