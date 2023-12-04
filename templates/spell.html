@@ -9,20 +9,75 @@
 {% block content %}
 
 <br></br>
-<div class="container rounded text-center justify-content-center p-3" style="background-color: white;">
+<div class="container rounded text-center justify-content-center p-3" style="background-color: white; max-width: 600px;">
     <h1>{{ response.spell_name.title() }}</h1>
 
     {% if response.spell_level == 'Cantrip' %}
     <i>{{ response.spell_school }} Cantrip</i>
     {% else %}
-    <i>Level {{ response.spell_level }} {{ response.spell_school }}</i>
+    <i>Level {{ response.spell_level }} {{ response.spell_school }} Spell</i>
     {% endif %}
 
     <hr class="border border-3 opacity-75">
     <div class="row">
-        
+        <div class="col"><b>Casting Time:</b> {{ response.spell_cast_time }}</div>
+        <div class="col"><b>Components:</b> {{ response.spell_components }}</div>
+    </div>
+    <div class="row">
+        <div class="col"><b>Range:</b> {{ response.spell_range }}</div>
+        <div class="col"><b>Duration:</b> {{ response.spell_duration }}</div>
     </div>
 
+    <hr class="border border-3 opacity-75">
+    <h3>Description</h3>
+    <hr>
+
+        {% for line in response.spell_description.split('\n') if line != '\n' %}
+            <p>
+                {% if '**' in line %}
+                    <b>{{ line.split('**')[1] }}</b>
+                    {% set description_body = line.split('**')[2] %}
+                {% else %}
+                    {% set description_body = line %}
+                {% endif %}
+
+                {% set italicize = namespace(output='', tack=False) %}
+                {% set linkify = namespace(output='', tack=False) %}
+
+                {% for slice in description_body.split() %}
+                    {% if '*' in slice and '[' not in slice and ']' not in slice and slice != '*' and italicize.tack == False %}
+                        {% set italicize.tack = True %}
+                    {% elif '*[' in slice %}
+                        {% set linkify.tack = True %}
+                    {% endif %}
+
+                    {% if italicize.tack %}
+                        {% set italicize.output = italicize.output + ' ' + slice %}
+                    {% elif linkify.tack %}
+                        {% set linkify.output = linkify.output + ' ' + slice %}
+                    {% else %}
+                        {{ slice }}
+                    {% endif %}
+
+                    {% if italicize.output.split('*')|length == 3 %}
+                        {% set italicize.tack = False %}
+                        <em>{{ italicize.output.replace('*', '') }}</em>
+                        {% set italicize.output = "" %}
+                    {% elif ']*' in linkify.output %}
+                        {% set linkify.tack = False %}
+                        <a href="{{ request.path }}?spell={{ linkify.output.replace('*[', '').replace(']*', '').replace(',', '').strip() }}">{{ linkify.output.replace('*[', '').replace(']*', '') }}</a>
+                        {% set linkify.output = "" %}
+                    {% endif %}
+                    
+                {% endfor %}
+            </p>
+
+        {% endfor %}
+
+    {% if response.spell_higher_level %}
+        <h5>At Higher Levels:</h5>
+        <p>{{ response.spell_higher_level }}</p>
+    {% endif %}
 </div>
 
 {% endblock %}

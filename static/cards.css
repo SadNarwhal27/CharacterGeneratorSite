@@ -2,7 +2,7 @@ b {
     color: #9E2A2B;
 }
 
-h1, h3 {
+h1, h3, h5 {
     color: #540B0E;
 }
 
@@ -26,3 +26,19 @@ h1, h3 {
 .slider:hover {
     opacity: 1;
   }
+
+.top {
+    text-decoration: none;
+    padding: 10px;
+    font-family: sans-serif;
+    color: #fff;
+    background: #E09F3E;;
+    border-radius: 100px;
+    position: sticky;
+    float: right;
+    bottom: 20px;
+    right: 20px; 
+
+    --offset: 100px; 
+    margin-top: calc(100vh + var(--offset));
+}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Character Created{% endblock %}
+{% block title %}Spells{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='cards.css') }}">
@@ -8,23 +8,92 @@
 
 {% block content %}
 
-{% for level in ['Cantrip', '1', '2', '3', '4', '5', '6', '7', '8', '9'] %}
-<h3>
-    {% if level == 'Cantrip' %}
-        Cantrips
-    {% else %}
-        Level {{ level }}
-    {% endif %}
-</h3>
-<div class="contianer">
-    {% for spell in response %}
+{% set levels = ['Cantrip', '1', '2', '3', '4', '5', '6', '7', '8', '9'] %}
+{% set classes = ['any', 'artificer', 'bard', 'cleric', 'druid', 'paladin', 'ranger', 'sorcerer', 'warlock', 'wizard'] %}
 
-        {% if response[spell]['spell_level'] == level %}
-            <li><a href="{{ request.path }}?spell={{ spell }}">{{ spell }}</a></li>
+{% macro list_spells(level, class) %}
+    <h3>
+        {% if level == 'Cantrip' %}
+            Cantrips
+        {% else %}
+            Level {{ level }}
         {% endif %}
+    </h3>
+    <div class="container">
+        {% for spell in response if response[spell]['spell_level'] == level %}
+            <p><a href="{{ request.path }}?spell={{ spell }}">{{ spell }} </a></p>
+        {% endfor %}
+    </div>
+{% endmacro %}
 
-    {% endfor %}
+<br><br>
+
+<div class="container">
+    {% if response.filter_class != 'any'%}
+        <h1>{{ response.pop('filter_class')|capitalize }} Spells</h1>
+    {% else %}
+        <h1>All Spells</h1>
+    {% endif %}
+
+    <div class="container">
+        <br>
+        <form class="form" action="/spells" method="post">
+            <div class="row">
+                <div class="col form-floating">
+                    <select class="form-select" name="level" id="level_select">
+                        <option selected value="None">Any</option>
+                        <option value="Cantrip">Cantrips</option>
+                        <option value="1">Level 1</option>
+                        <option value="2">Level 2</option>
+                        <option value="3">Level 3</option>
+                        <option value="4">Level 4</option>
+                        <option value="5">Level 5</option>
+                        <option value="6">Level 6</option>
+                        <option value="7">Level 7</option>
+                        <option value="8">Level 8</option>
+                        <option value="9">Level 9</option>
+                    </select>
+                    <label for="level_select">Spell Level</label>
+                </div>
+                <div class="col form-floating">
+                    <select class="form-select" name="class" id="spell_class">
+                        <option selected value="any">Any</option>
+                        <option value="artificer">Artificer</option>
+                        <option value="bard">Bard</option>
+                        <option value="cleric">Cleric</option>
+                        <option value="druid">Druid</option>
+                        <option value="paladin">Paladin</option>
+                        <option value="ranger">Ranger</option>
+                        <option value="sorcerer">Sorcerer</option>
+                        <option value="warlock">Warlock</option>
+                        <option value="wizard">Wizard</option>
+                    </select>
+                    <label for="spell_class">Character Class</label>
+                </div>
+            </div>
+            
+            <button type="submit" id="spell_button" class="btn m-2" style="background-color: #E09F3E;" onclick="showSpinner('character_spinner')">
+                <span id="character_spinner" style="color: white;">Create Item</span>
+            </button>
+        </form>
+
+    </div>
 </div>
-{% endfor %}
+
+<div class="container">
+    {% if response.filter_level %}
+        {% set filter_level = response.pop('filter_level') %}
+        {{ list_spells(filter_level, response.filter_class) }}
+    {% else %}
+        {% for level in levels %}
+            {{ list_spells(level, response.filter_class) }}
+        {% endfor %}
+    {% endif %}
+</div>
+
+<a href="#" class="top">Back to Top ↑</a>
+
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
 
 {% endblock %}
