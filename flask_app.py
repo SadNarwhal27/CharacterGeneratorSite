@@ -2,6 +2,12 @@ from flask import Flask, request, render_template
 import requests
 import os
 
+testing = False
+if testing:
+    route = 'http://127.0.0.1:5001/'
+else:
+    route = os.getenv('API_URL')
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,11 +20,7 @@ def create_npc():
     gender = request.form.get('gender')
     backstory = request.form.get('backstory')
 
-    # Production
-    response = requests.get(os.getenv('API_URL') + f"/npc?race={race}&gender={gender}&backstory={backstory}")
-
-    # For testing
-    # response = requests.get('http://127.0.0.1:5001/' + f"/npc?race={race}&gender={gender}&backstory={backstory}")
+    response = requests.get(route + f"/npc?race={race}&gender={gender}&backstory={backstory}")
 
     return render_template('npc_created.html', response=response.json())
 
@@ -27,25 +29,17 @@ def create_item():
     treasure_type = request.form.get('type')
     description_lod = request.form.get('lod')
 
-    # Production
-    response = requests.get(os.getenv('API_URL') + f"/item?type={treasure_type}&lod={description_lod}")
-
-    # For testing
-    # response = requests.get('http://127.0.0.1:5001/' + f"/item?type={treasure_type}&lod={description_lod}")
+    response = requests.get(route + f"/item?type={treasure_type}&lod={description_lod}")
 
     return render_template('item_created.html', response=response.json())
 
 @app.route('/spells', methods=['GET','POST'])
 def get_spells():
-    spell = request.args.get('spell')
-    level = request.form.get('level')
-    spell_class = request.form.get('class')
+    spell = request.args.get('spell_name')
+    level = request.form.get('spell_level')
+    spell_class = request.form.get('spell_class')
 
-    # Production
-    response = requests.get(os.getenv('API_URL') + f"/spells?spell={spell}&level={level}&class={spell_class}")
-
-    # For testing
-    # response = requests.get('http://127.0.0.1:5001/' + f"/spells?spell={spell}&level={level}&class={spell_class}")
+    response = requests.get(route + f"/spells?spell_name={spell}&spell_level={level}&spell_classes={spell_class}")
 
     if spell:
         return render_template('spell.html', response=response.json())

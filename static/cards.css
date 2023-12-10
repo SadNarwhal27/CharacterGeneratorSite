@@ -25,20 +25,23 @@ h1, h3, h5 {
 
 .slider:hover {
     opacity: 1;
-  }
+}
 
 .top {
+    --offset: 50px; 
+  
+    position: sticky;
+    bottom: 20px;      
+    margin-right: 10px; 
+    place-self: end;
+    margin-top: calc(100vh + var(--offset));
+  
+    /* visual styling */
     text-decoration: none;
     padding: 10px;
     font-family: sans-serif;
     color: #fff;
-    background: #E09F3E;;
+    background: #E09F3E;
     border-radius: 100px;
-    position: sticky;
-    float: right;
-    bottom: 20px;
-    right: 20px; 
-
-    --offset: 100px; 
-    margin-top: calc(100vh + var(--offset));
+    white-space: nowrap;
 }

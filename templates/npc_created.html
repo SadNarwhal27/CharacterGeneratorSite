@@ -13,9 +13,10 @@
 
     <!-- Name data -->
     <h1>{{ response.first_name }}</h1>
-    <p class="text-capitalize"><em>{{ response.gender }} {{ response.race }} {{ response.occupation }}, {{ response.alignment }}</em></p>
+    <p class="text-capitalize"><em>{{ response.gender }} {{ response.race }} {{ response.occupation_name }}, {{ response.alignment }}</em></p>
     
     <!-- Attributes -->
+    <!-- TODO tidy this up and use Bootstrap stuff instead of the table -->
     <hr class="border border-3 opacity-75">
     <table class="table table-sm table-borderless">
         <tr>
@@ -26,6 +27,8 @@
     </table>
 
     <!-- Stats and modifiers -->
+    <!-- TODO tidy this up and use Bootstrap stuff instead of the table -->
+    <!-- TODO Add + to any positive modifiers -->
     <hr class="border border-3 opacity-75">
     <table class="table table-sm table-borderless">
         <tr>
@@ -57,13 +60,14 @@
     </table>
     
     <!-- Features -->
+    <!-- TODO tidy this up and use Bootstrap stuff instead of the table -->
     <hr class="border border-3 opacity-75">
     <table class="table table-sm table-borderless">
         <tr>
             <!-- Skills coming soon -->
             <td colspan="2"><b>Skills</b> {{ response.skills }}</td>
             <td colspan="2"><b>Senses</b> {{ response.senses }}</td>
-            <td colspan="2"><b>Languages</b> {{ response.language }}</td>
+            <td colspan="2"><b>Languages</b> {{ response.languages }}</td>
         </tr>
     </table>
 
@@ -72,7 +76,7 @@
     <h3>Actions</h3>
     <hr>
     {% set weapon_name = response.actions|first %}
-    <p><b>{{ weapon_name }}</b> <i>{{ response.actions[weapon_name].type }}:</i> {{ response.actions[weapon_name].hit_modifier }} to hit, {{ response.actions[weapon_name].range }} range, {{ response.actions[weapon_name].damage }} {{ response.actions[weapon_name].damage_type }} damage,</p>
+    <p><b>{{ weapon_name }}</b> <i>{{ response.actions[weapon_name].weapon_type }}:</i> {{ response.actions[weapon_name].hit_modifier }} to hit, {{ response.actions[weapon_name].weapon_range }} range, {{ response.actions[weapon_name].weapon_damage }} {{ response.actions[weapon_name].weapon_damage_type }} damage.</p>
     
     <!-- Backstory -->
     {% if response.backstory %}

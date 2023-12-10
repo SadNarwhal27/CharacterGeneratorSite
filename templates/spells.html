@@ -21,7 +21,7 @@
     </h3>
     <div class="container">
         {% for spell in response if response[spell]['spell_level'] == level %}
-            <p><a href="{{ request.path }}?spell={{ spell }}">{{ spell }} </a></p>
+            <p><a href="{{ request.path }}?spell_name={{ spell }}">{{ spell }} </a></p>
         {% endfor %}
     </div>
 {% endmacro %}
@@ -40,7 +40,7 @@
         <form class="form" action="/spells" method="post">
             <div class="row">
                 <div class="col form-floating">
-                    <select class="form-select" name="level" id="level_select">
+                    <select class="form-select" name="spell_level" id="level_select">
                         <option selected value="None">Any</option>
                         <option value="Cantrip">Cantrips</option>
                         <option value="1">Level 1</option>
@@ -56,7 +56,7 @@
                     <label for="level_select">Spell Level</label>
                 </div>
                 <div class="col form-floating">
-                    <select class="form-select" name="class" id="spell_class">
+                    <select class="form-select" name="spell_class" id="spell_class">
                         <option selected value="any">Any</option>
                         <option value="artificer">Artificer</option>
                         <option value="bard">Bard</option>
